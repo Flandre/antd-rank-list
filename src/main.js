@@ -1,7 +1,10 @@
-import React from 'react';
+import React from 'react'
 import { render } from 'react-dom'
+import SenkaRank from './components/SenkaRank'
 
 render(
-  <span>hello world</span>,
+  <div>
+    <SenkaRank/>
+  </div>,
   document.getElementById('app')
 );

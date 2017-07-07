@@ -1,16 +1,30 @@
+const path = require('path');
+
 module.exports = {
-  entry: __dirname + '/src/main',
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+    // 'whatwg-fetch',
+    __dirname + '/src/main'
+  ],
   output: {
-    path: __dirname + '/static/dist',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: "/static/"
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        include: __dirname
       }
     ]
+  },
+
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    port: 9000
   }
 };
