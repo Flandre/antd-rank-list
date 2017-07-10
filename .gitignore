@@ -1,4 +1,4 @@
-.idea/
-node_modules/
-static/
+.idea
+node_modules
+dist
 npm-debug.log

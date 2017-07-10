@@ -8,7 +8,7 @@ export default class SenkaRank extends Component {
     }
   }
 
-  handleClick = e => {
+  handleClick = e =>{
     this.setState({
       value: this.state.value + 1
     }, () => {
