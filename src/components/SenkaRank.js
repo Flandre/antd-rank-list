@@ -10,7 +10,7 @@ export default class SenkaRank extends Component {
 
   handleClick = e =>{
     this.setState({
-      value: this.state.value + 1
+      value: this.state.value + 2
     }, () => {
       console.log('click: ' + this.state.value)
     })
@@ -19,7 +19,7 @@ export default class SenkaRank extends Component {
   render(){
     return(
       <div>
-        <button onClick={this.handleClick.bind(this)}>get</button>
+        <button onClick={this.handleClick}>get</button>
       </div>
     )
   }
