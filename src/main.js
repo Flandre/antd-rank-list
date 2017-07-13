@@ -6,5 +6,5 @@ render(
   <div>
     <SenkaRank/>
   </div>,
-  document.getElementById('app')
+  document.querySelector('#app')
 );
