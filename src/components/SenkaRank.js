@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const fetchAsync = async (uri) => {
+  const res = await fetch(uri)
+  return res.text()
+}
+
 export default class SenkaRank extends Component {
   constructor(){
     super();
@@ -9,7 +14,7 @@ export default class SenkaRank extends Component {
     }
   }
 
-  handleClick = e =>{
+  handleClick = async (e) =>{
     console.log(e.currentTarget.value);
     // axios.get('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
     //   .then(res => {
@@ -19,18 +24,20 @@ export default class SenkaRank extends Component {
     //   .catch(err => {
     //     console.log(err)
     //   })
-
-    fetch('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
-      .then(res => {
-        console.log('=== fetch ===')
-        console.log(res);
-        return res.text();
-      })
-      .then(res => {
-        console.log('=== fetch res ===')
-        console.log(res)
-        this.setState({value: res})
-      })
+    const res = await fetchAsync('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
+    console.log(res)
+    this.setState({value: res})
+    // fetch('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
+    //   .then(res => {
+    //     console.log('=== fetch ===')
+    //     console.log(res);
+    //     return res.text();
+    //   })
+    //   .then(res => {
+    //     console.log('=== fetch res ===')
+    //     console.log(res)
+    //     this.setState({value: res})
+    //   })
   }
 
   render(){
@@ -62,8 +69,8 @@ export default class SenkaRank extends Component {
     return(
       <div>
         {
-          serverList.map((server, index) =>
-            <button key={index} value={server} onClick={this.handleClick}>{serverName[server]}</button>
+          serverList.map((server, key) =>
+            <button key={key} value={server} onClick={this.handleClick}>{serverName[server]}</button>
           )
         }
         <br />
