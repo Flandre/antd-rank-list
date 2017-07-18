@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
-const fetchAsync = async (uri) => {
-  const res = await fetch(uri)
-  return res.text()
-}
+const fetchAsync = async uri => (await fetch(uri)).text()
 
 export default class SenkaRank extends Component {
   constructor(){
@@ -14,16 +10,8 @@ export default class SenkaRank extends Component {
     }
   }
 
-  handleClick = async (e) =>{
+  handleClick = async (e) => {
     console.log(e.currentTarget.value);
-    // axios.get('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
-    //   .then(res => {
-    //     console.log('=== axios ===')
-    //     console.log(res)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
     const res = await fetchAsync('http://124.65.37.154:12450/api/calrank?server=' + e.currentTarget.value)
     console.log(res)
     this.setState({value: res})
