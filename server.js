@@ -11,6 +11,7 @@ app.get("/", function(req, res) {
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
+
 app.listen(port, function(error) {
   if (error) {
     console.error(error)
