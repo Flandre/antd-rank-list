@@ -1,12 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 import SenkaRank from './components/SenkaRank'
-import Test from './components/test'
+import SiderDemo from './components/test2'
 
 render(
   <div>
-    <SenkaRank/>
-    <Test/>
+    <SiderDemo/>
   </div>,
   document.querySelector('#app')
 );
