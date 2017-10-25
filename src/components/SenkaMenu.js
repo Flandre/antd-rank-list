@@ -6,6 +6,10 @@ const SubMenu = Menu.SubMenu;
 
 @observer
 export default class SenkaMenu extends React.Component {
+  selectServer = (e) => {
+    console.log(e)
+    this.props.appState.handleSelectServer(e.key);
+  }
   render() {
     console.log('update for menu')
     console.log(this.props.appState)
@@ -14,6 +18,8 @@ export default class SenkaMenu extends React.Component {
         theme="dark"
         mode="inline"
         inlineCollapsed={this.props.appState.antdOption.collapsed}
+        defaultOpenKeys={['sub1']}
+        onClick={this.selectServer}
       >
         <SubMenu
           key="sub1"

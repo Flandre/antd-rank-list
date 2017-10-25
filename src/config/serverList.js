@@ -1,4 +1,4 @@
-const serverName = {
+export const serverName = {
   1: '横须贺镇守府',
   2: '吴镇守府',
   3: '佐世保镇守府',
@@ -21,6 +21,10 @@ const serverName = {
   20: '柱岛泊地',
 }
 let availableServer = [8, 16, 15, 18, 19]
+let serverMap = {}
+availableServer.forEach(ele => {
+  serverMap[ele] = serverName[ele]
+})
 export default availableServer.map((serverId => { return {
   "serverId": serverId,
   "serverName": serverName[serverId]

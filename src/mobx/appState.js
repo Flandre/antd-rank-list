@@ -8,8 +8,14 @@ let appState = observable({
   },
 })
 
+/* 控制menu折叠 */
 appState.handleCollapsed = action(() => {
   appState.antdOption.collapsed = !appState.antdOption.collapsed;
+})
+
+/* 控制服务器选择 */
+appState.handleSelectServer = action(id => {
+  appState.serverId = id;
 })
 
 export default appState

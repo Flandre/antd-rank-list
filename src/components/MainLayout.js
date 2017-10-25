@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout } from 'antd';
 import { action } from 'mobx'
 import { observer } from "mobx-react";
 import SenkaMenu from "./SenkaMenu"
+import RankTable from "./RankTable"
 const { Header, Content, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
 
 @observer
 export default class MainLayout extends React.Component {
@@ -31,7 +31,7 @@ export default class MainLayout extends React.Component {
           <Layout>
             <Content>
               <div style={{ padding: 24, background: '#fff', minHeight: '360px' }}>
-                shikong is baka.
+                <RankTable appState={this.props.appState}/>
               </div>
             </Content>
           </Layout>
