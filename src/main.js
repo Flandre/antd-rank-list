@@ -1,11 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import SenkaRank from './components/SenkaRank'
-import SiderDemo from './components/test2'
+import appState from './mobx/appState'
+import MainLayout from './components/MainLayout'
 
-render(
-  <div>
-    <SiderDemo/>
-  </div>,
-  document.querySelector('#app')
-);
+render(<MainLayout appState={appState}/>, document.querySelector('#app'));
