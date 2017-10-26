@@ -21,7 +21,7 @@ export default class MainLayout extends React.Component {
     return (
       <Layout>
         <Header className="header" style={{ position: 'fixed', width: '100%' }}>
-          <h2 style={{ color: '#fff' }}>测试测试</h2>
+          <h2 style={{ color: '#fff' }}>战果查询</h2>
         </Header>
         <Layout style={{ paddingTop: 64 , height: '100vh'}}>
           <Sider

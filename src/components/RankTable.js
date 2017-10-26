@@ -3,48 +3,63 @@ import { observer } from "mobx-react";
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
-import { Icon } from 'antd';
+import { Icon, Alert } from 'antd';
 
 @observer
 export default class RankTable extends React.Component {
+  onClose = e => {
+    this.props.appState.setErrorMessage('')
+    this.props.appState.handleDataPending('free')
+  }
   render() {
-    if(this.props.appState.isPending && this.props.appState.serverId) {
+    let status = ''
+    if(this.props.appState.serverState === 'pending' && this.props.appState.serverId) {
       console.log('=== fetch start ===')
       axios.get('http://124.65.37.154:12450/api/calrank', {
         params: {
           server: this.props.appState.serverId
         },
         timeout: TIME_OUT,
+        onDownloadProgress: function(e){
+          console.log(e)
+        }
       })
         .then(response => {
-          this.props.appState.handleDataPending('success');
-          console.log(response.data)
           console.log('=== fetch success ===')
+          console.log(response.data)
+          this.props.appState.handleDataPending('success');
         })
         .catch(error => {
-          this.props.appState.handleDataPending('error');
-          console.log(error)
           console.log('=== fetch error ===')
+          console.log(error)
+          this.props.appState.setErrorMessage(error.toString())
+          this.props.appState.handleDataPending('error');
         })
     }
-    let status = ''
     switch(this.props.appState.serverState){
       case 'free':
-        status = '空闲'
+        status = ''
         break
       case 'pending':
-        status = '请求中...'
+        status = <Alert message={<span>请求数据中<Icon type="loading" style={{marginLeft: '10px'}}/></span>} type="info" showIcon />
         break
       case 'error':
-        status = '请求失败'
+        status = <Alert
+          message="请求失败"
+          description={this.props.appState.errMsg}
+          type="error"
+          showIcon
+          closable
+          onClose={this.onClose}
+        />
         break
       case 'success':
-        status = '请求成功'
+        status = <Alert message="请求成功" type="success" showIcon />
         break
     }
     return(
       <div>
-        <p>服务器状态：{this.props.appState.serverState === 'pending' ? <Icon type="loading" /> : ''}{status}</p>
+        {status}
         <p>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
       </div>
     )
