@@ -9,6 +9,7 @@ export default class SenkaMenu extends React.Component {
   selectServer = (e) => {
     this.props.appState.handleSelectServer(e.key);
     this.props.appState.handleDataPending('pending');
+    this.props.appState.setRankData('');
   }
   render() {
     return (

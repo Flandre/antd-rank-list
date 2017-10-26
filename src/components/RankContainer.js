@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { observer } from "mobx-react";
+import React, { Component } from 'react'
+import { observer } from "mobx-react"
+import RankTable from "./RankTable"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
-import { Icon, Alert } from 'antd';
+import { Icon, Alert } from 'antd'
 
 @observer
 export default class RankContainer extends React.Component {
@@ -23,9 +24,9 @@ export default class RankContainer extends React.Component {
       })
         .then(response => {
           console.log('=== fetch success ===')
-          this.props.appState.setRankData(response.data)
-          console.log(response.data)
           this.props.appState.handleDataPending('success');
+          console.log(response.data)
+          this.props.appState.setRankData(response.data)
         })
         .catch(error => {
           console.log('=== fetch error ===')
@@ -59,6 +60,7 @@ export default class RankContainer extends React.Component {
       <div>
         {status}
         <p>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
+        <RankTable appState={this.props.appState}/>
       </div>
     )
   }
