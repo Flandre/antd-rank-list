@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import { action } from 'mobx'
 import { observer } from "mobx-react";
 import SenkaMenu from "./SenkaMenu"
-import RankTable from "./RankTable"
+import RankContainer from "./RankContainer"
 const { Header, Content, Sider } = Layout;
 
 @observer
@@ -17,6 +17,7 @@ export default class MainLayout extends React.Component {
     console.log(this.props.appState.isPending)
     console.log(this.props.appState.serverId)
     console.log(this.props.appState.serverState)
+    console.log(this.props.appState.rankData)
     console.log('====update')
     return (
       <Layout>
@@ -35,7 +36,7 @@ export default class MainLayout extends React.Component {
           <Layout>
             <Content>
               <div style={{ padding: 24, background: '#fff', minHeight: '360px' }}>
-                <RankTable appState={this.props.appState}/>
+                <RankContainer appState={this.props.appState}/>
               </div>
             </Content>
           </Layout>

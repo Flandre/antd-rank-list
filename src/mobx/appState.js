@@ -5,7 +5,7 @@ let appState = observable({
   serverId: 0,
   isPending: false,
   serverState: 'free',
-  nowData :'',
+  rankData :'',
   errMsg: '',
   antdOption: {
     collapsed: false
@@ -33,14 +33,11 @@ appState.handleDataPending = action(status => {
       appState.isPending = true
       break
     case 'error':
-      // setTimeout(() => {
-      //   appState.handleDataPending('free')
-      // }, 2000)
       break
     case 'success':
       setTimeout(() => {
         appState.handleDataPending('free')
-      }, 1000)
+      }, 2000)
       break
   }
 })
@@ -48,6 +45,11 @@ appState.handleDataPending = action(status => {
 /* 显示错误信息 */
 appState.setErrorMessage = action(errMsg => {
   appState.errMsg = errMsg
+})
+
+/* 保存请求数据 */
+appState.setRankData = action(data => {
+  appState.rankData = data
 })
 
 export default appState

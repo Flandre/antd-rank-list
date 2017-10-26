@@ -6,7 +6,7 @@ import axios from "axios"
 import { Icon, Alert } from 'antd';
 
 @observer
-export default class RankTable extends React.Component {
+export default class RankContainer extends React.Component {
   onClose = e => {
     this.props.appState.setErrorMessage('')
     this.props.appState.handleDataPending('free')
@@ -20,12 +20,10 @@ export default class RankTable extends React.Component {
           server: this.props.appState.serverId
         },
         timeout: TIME_OUT,
-        onDownloadProgress: function(e){
-          console.log(e)
-        }
       })
         .then(response => {
           console.log('=== fetch success ===')
+          this.props.appState.setRankData(response.data)
           console.log(response.data)
           this.props.appState.handleDataPending('success');
         })
