@@ -7,12 +7,10 @@ const SubMenu = Menu.SubMenu;
 @observer
 export default class SenkaMenu extends React.Component {
   selectServer = (e) => {
-    console.log(e)
     this.props.appState.handleSelectServer(e.key);
+    this.props.appState.handleDataPending('pending');
   }
   render() {
-    console.log('update for menu')
-    console.log(this.props.appState)
     return (
       <Menu
         theme="dark"
@@ -24,12 +22,25 @@ export default class SenkaMenu extends React.Component {
         <SubMenu
           key="sub1"
           title={<span><Icon type="appstore" /><span>选择服务器</span></span>}
+          disabled={this.props.appState.isPending}
         >
           {ServerList.map(server => {
             return (
-              <Menu.Item key={server.serverId}>{server.serverName}</Menu.Item>
+              <Menu.Item
+                key={server.serverId}
+                disabled={this.props.appState.isPending}
+              >
+                {server.serverName}
+              </Menu.Item>
             )
           })}
+
+          <Menu.Item
+            key='100'
+            disabled={this.props.appState.isPending}
+          >
+            测试
+          </Menu.Item>
         </SubMenu>
       </Menu>
     )
