@@ -227,6 +227,33 @@ export default (data, ignore) => {
         }
         break
       case 3:
+        exstr = 'unknown';
+        var firstExpDateNo = getDateNo(expfrom);
+        var maxsenka1 = senka.subsenka+minmap[firstExpDateNo]+1380-zcleared;
+        var minsenka = senka.subsenka+1380-zcleared;
+        var maxsenka2 = senka.senka + 1380 - senka.ex-zcleared;
+        var maxsenka3 = senka.subsenka + senka.fsenka + 1380-zcleared;
+        var maxsenka = 99999;
+
+        if(maxsenka1<maxsenka){
+          maxsenka=maxsenka1;
+        }
+        if(maxsenka2<maxsenka){
+          maxsenka=maxsenka2;
+        }
+        if(maxsenka3<maxsenka){
+          maxsenka=maxsenka3;
+        }
+        if(new Date(basets).getMonth()<month){
+          var maxsenka4 = senka.subsenka+senka.subbase+1380-zcleared;
+          if(maxsenka4<maxsenka){
+            maxsenka=maxsenka4;
+          }
+        }
+
+        data.d[i].max=maxsenka;
+        data.d[i].min=minsenka;
+      break
 
 
     }
