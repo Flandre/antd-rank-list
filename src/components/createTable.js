@@ -167,7 +167,7 @@ export default (data,sorttype,ignore) =>{
           var maxsenka4 = -1;
           var maxsenka5 = -1;
           if(new Date(basets).getMonth()<month){
-            maxsenka4 = senka.subsenka+senka.subbase+1380-zcleared;
+            maxsenka4 = senka.subsenka+senka.subbase+minmap[0]+1380-zcleared;
             if(maxsenka4<maxsenka){
               maxsenka=maxsenka4;
             }
