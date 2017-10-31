@@ -30,7 +30,7 @@ export default (data, ignore) => {
      *
      */
 
-    let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, /*senka*/} = cur,
+    let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka} = cur,
       zcleared = 0, userObj = {}, zComplete = z, isSuccess = false
 
     userObj.lno = lno
