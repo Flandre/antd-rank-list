@@ -13,7 +13,27 @@ export default (data, ignore) => {
    return (date - 1) * 2 + (hour >= 13 ? 1 : 0)
   }
   data.d.forEach((cur, index) => {
-    let { type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, /*senka*/} = cur, zcleared = 0, userObj = {}
+
+    /*
+     * userObj:
+     *
+     * lno:                实际排名
+     * extraSenka:         ex图战果
+     * extraStartOffset:   ex图统计开始时间（timestamp，如果有）
+     * extraNowOffset:     ex图统计结束时间（timestamp，如果有）
+     * zCompleteMonth:     z图攻略时间（如果有）
+     * subSenka:           根据本月经验算出的战果
+     * expStartOffset:     经验值统计开始时间（timestamp，如果有）
+     * expNowOffset:       经验值统计结束时间（timestamp，如果有）
+     * maxSenka:           预测最大战果
+     * minSenka:           预测最小战果
+     *
+     */
+
+    let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, /*senka*/} = cur,
+      zcleared = 0, userObj = {}, zComplete = z, isSuccess = false
+
+    userObj.lno = lno
 
     /* 处理z炮 */
     if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
@@ -22,15 +42,15 @@ export default (data, ignore) => {
     if(ignore || (now.getDate() === monthOfDay[now.getMonth()] && now.getHours() >= 14)){
       if(ex > 1025 && ex < 1035){
         zcleared = 350
-        z = -1
+        zComplete = -1
       }
       if(ex < 960 && ex > 950){
         zcleared = 350
-        z = -1
+        zComplete = -1
       }
       if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex < 950) {
         zcleared = 350
-        z = -1
+        zComplete = -1
       }
       if(ex < 950){
         if(max){
@@ -48,7 +68,7 @@ export default (data, ignore) => {
             }
             if(zc === 0){
               zcleared = 350
-              z = -1
+              zComplete = -1
             }
           }
         }
@@ -74,7 +94,7 @@ export default (data, ignore) => {
           userObj.extraNowOffset = new Date(exto)
         }
         if(zcleared>0){
-          userObj.zCompleteMonth = z + 1
+          userObj.zCompleteMonth = zComplete + 1
         }
         if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
           userObj.maxSenka = subsenka + fsenka + 1380 - zcleared
@@ -112,6 +132,7 @@ export default (data, ignore) => {
           }
           userObj.maxSenka = Math.min(...maxsenkaArr)
         }
+        isSuccess = true
         break
       case 2:
         let length = may.length;
@@ -227,37 +248,22 @@ export default (data, ignore) => {
         }
         break
       case 3:
-        exstr = 'unknown';
-        var firstExpDateNo = getDateNo(expfrom);
-        var maxsenka1 = senka.subsenka+minmap[firstExpDateNo]+1380-zcleared;
-        var minsenka = senka.subsenka+1380-zcleared;
-        var maxsenka2 = senka.senka + 1380 - senka.ex-zcleared;
-        var maxsenka3 = senka.subsenka + senka.fsenka + 1380-zcleared;
-        var maxsenka = 99999;
-
-        if(maxsenka1<maxsenka){
-          maxsenka=maxsenka1;
+        userObj.extraSenka = 'unknown';
+        let firstExpDateNo = getDateNo(expfrom),
+          maxsenkaArr = [
+            subsenka + minmap[firstExpDateNo] + 1380 - zcleared,
+            senka + 1380 - ex - zcleared,
+            subsenka + fsenka + 1380 - zcleared,
+            99999
+          ]
+        if(new Date(basets).getMonth() < month){
+          maxsenkaArr.push(subsenka + subbase + 1380 - zcleared)
         }
-        if(maxsenka2<maxsenka){
-          maxsenka=maxsenka2;
-        }
-        if(maxsenka3<maxsenka){
-          maxsenka=maxsenka3;
-        }
-        if(new Date(basets).getMonth()<month){
-          var maxsenka4 = senka.subsenka+senka.subbase+1380-zcleared;
-          if(maxsenka4<maxsenka){
-            maxsenka=maxsenka4;
-          }
-        }
-
-        data.d[i].max=maxsenka;
-        data.d[i].min=minsenka;
+        userObj.maxSenka = Math.min(...maxsenkaArr)
+        userObj.minSenka = subsenka + 1380 - zcleared
+        isSuccess = true
       break
-
-
     }
-
   })
 
 }
