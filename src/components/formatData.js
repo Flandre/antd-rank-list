@@ -254,7 +254,7 @@ export default (data, ignore) => {
         let firstExpDateNo = getDateNo(expfrom),
           maxsenkaArr = [
             subsenka + minmap[firstExpDateNo] + 1380 - zcleared,
-            senka + 1380 - ex - zcleared,
+            senka + 1380 - ex - zcleared || 99999,
             subsenka + fsenka + 1380 - zcleared,
             99999
           ]
