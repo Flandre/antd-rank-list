@@ -33,7 +33,7 @@ export default class MainLayout extends React.Component {
           >
             <SenkaMenu appState={this.props.appState}/>
           </Sider>
-          <Layout>
+          <Layout style={{ background: '#fff' }}>
             <Content>
               <div style={{ padding: 24, background: '#fff', minHeight: '360px' }}>
                 <RankContainer appState={this.props.appState}/>

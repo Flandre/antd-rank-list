@@ -1,6 +1,6 @@
 export default (data, ignore) => {
   console.log("ignore Z:"+ignore)
-  let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front }, now = new Date(), month = now.getMonth()
+  let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth()
   const monthOfDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const getDateNo = function(now){
     now = new Date(new Date(now).getTime()+(new Date().getTimezoneOffset()+480)*60000)
@@ -18,6 +18,8 @@ export default (data, ignore) => {
      * userObj:
      *
      * lno:                实际排名
+     * name:               昵称
+     * senka:              当前战果
      * extraSenka:         ex图战果
      * extraStartOffset:   ex图统计开始时间（timestamp，如果有）
      * extraNowOffset:     ex图统计结束时间（timestamp，如果有）
@@ -30,10 +32,12 @@ export default (data, ignore) => {
      *
      */
 
-    let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka} = cur,
+    let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, max, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name} = cur,
       zcleared = 0, userObj = {}, zComplete = z, isSuccess = false
 
     userObj.lno = lno
+    userObj.name = name
+    userObj.senka = senka
 
     /* 处理z炮 */
     if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
@@ -266,5 +270,5 @@ export default (data, ignore) => {
       AllData.push(userObj)
     }
   })
-
+  return AllData
 }
