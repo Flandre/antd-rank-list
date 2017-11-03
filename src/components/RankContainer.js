@@ -4,13 +4,21 @@ import RankTable from "./RankTable"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
-import { Icon, Alert } from 'antd'
+import { Icon, Alert, Switch } from 'antd'
+import formatData from "./formatData"
 
 @observer
 export default class RankContainer extends React.Component {
   onClose = e => {
     this.props.appState.setErrorMessage('')
     this.props.appState.handleDataPending('free')
+  }
+  onChange = checked => {
+    console.log(`:::::::::::::switch : ${checked}`)
+    this.props.appState.handleIgnoreZ(checked)
+    if(this.props.appState.rankData !== ''){
+      this.props.appState.setFormatData(formatData(this.props.appState.rankData, checked))
+    }
   }
   render() {
     let status = ''
@@ -27,6 +35,7 @@ export default class RankContainer extends React.Component {
           this.props.appState.handleDataPending('success');
           console.log(response.data)
           this.props.appState.setRankData(response.data)
+          this.props.appState.setFormatData(formatData(response.data, this.props.appState.ignoreZ))
         })
         .catch(error => {
           console.log('=== fetch error ===')
@@ -59,7 +68,12 @@ export default class RankContainer extends React.Component {
     return(
       <div>
         {status}
-        <p>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
+        <p style={{ textAlign: 'left' }}>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
+        <p>忽略未完成的Z <Switch
+          defaultChecked={this.props.appState.ignoreZ}
+          onChange={this.onChange}
+          size="small"
+        /></p>
         <RankTable appState={this.props.appState}/>
       </div>
     )

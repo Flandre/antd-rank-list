@@ -6,7 +6,9 @@ let appState = observable({
   isPending: false,
   serverState: 'free',
   rankData :'',
+  formatData : [],
   errMsg: '',
+  ignoreZ: false,
   antdOption: {
     collapsed: false
   },
@@ -50,6 +52,14 @@ appState.setErrorMessage = action(errMsg => {
 /* 保存请求数据 */
 appState.setRankData = action(data => {
   appState.rankData = data
+})
+appState.setFormatData = action(data => {
+  appState.formatData = data
+})
+
+/* 忽略z炮 */
+appState.handleIgnoreZ = action(ignore => {
+  appState.ignoreZ = ignore
 })
 
 export default appState
