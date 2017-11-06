@@ -1,6 +1,6 @@
 export default (data, ignore) => {
   console.log("ignore Z:"+ignore)
-  let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth()
+  let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth(), fixcount = 0
   const monthOfDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const getDateNo = function(now){
     now = new Date(new Date(now).getTime()+(new Date().getTimezoneOffset()+480)*60000)
@@ -34,7 +34,7 @@ export default (data, ignore) => {
        */
 
       let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name} = cur,
-        zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index].maxSenka: 0
+        zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index].maxSenka : 0
 
       userObj.lno = lno
       userObj.name = name
@@ -269,14 +269,26 @@ export default (data, ignore) => {
           isSuccess = true
           break
       }
-      if(isSuccess){
-        if(_i){
-          AllData[index] = userObj
+      /* todo: 可能会导致不一致 fix*/
+      if(_i){
+        if(isSuccess){
+          AllData[index - fixcount] = userObj
         } else {
+          fixcount ++
+        }
+      } else {
+        if(isSuccess){
           AllData.push(userObj)
         }
       }
+      // if(isSuccess){
+      //   if(_i){
+      //     AllData[index] = userObj
+      //   } else {
+      //   }
+      // }
     })
   }
+
   return AllData
 }
