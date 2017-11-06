@@ -43,8 +43,7 @@ export default (data, ignore) => {
       /* 处理z炮 */
       if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
         zcleared = 350
-      }
-      if(ignore || (now.getDate() === monthOfDay[now.getMonth()] && now.getHours() >= 14)){
+      } else if (ignore || (now.getDate() === monthOfDay[now.getMonth()] && now.getHours() >= 14)){
         if(ex > 1025 && ex < 1035){
           zcleared = 350
           zComplete = -1

@@ -100,7 +100,7 @@ export default class RankTable extends React.Component {
           if(record.extraStartOffset && record.extraNowOffset){
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth}月已完成Z作战）</span>
+                children: <span>{record.extraSenka}  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
               }
             } else {
               return {
@@ -110,7 +110,7 @@ export default class RankTable extends React.Component {
           } else {
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}  （{record.zCompleteMonth}月已完成Z作战）</span>
+                children: <span>{record.extraSenka}  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
               }
             } else {
               return {
