@@ -35,13 +35,6 @@ export default class SenkaMenu extends React.Component {
               </Menu.Item>
             )
           })}
-
-          <Menu.Item
-            key='100'
-            disabled={this.props.appState.isPending}
-          >
-            测试
-          </Menu.Item>
         </SubMenu>
       </Menu>
     )

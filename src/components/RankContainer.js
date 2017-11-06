@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { observer } from "mobx-react"
 import RankTable from "./RankTable"
+import RankForecast from "./RankForecast"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
@@ -69,11 +70,12 @@ export default class RankContainer extends React.Component {
       <div>
         {status}
         <p style={{ textAlign: 'left', fontSize: '24px' }}>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
-        <p>忽略未完成的Z <Switch
+        <p style={{ marginBottom: '10px' }}>忽略未完成的Z <Switch
           defaultChecked={this.props.appState.ignoreZ}
           onChange={this.onChange}
           size="small"
         /></p>
+        <RankForecast appState={this.props.appState}/>
         <RankTable appState={this.props.appState}/>
       </div>
     )
