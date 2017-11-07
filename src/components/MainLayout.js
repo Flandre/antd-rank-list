@@ -12,13 +12,13 @@ export default class MainLayout extends React.Component {
     this.props.appState.handleCollapsed();
   }
   render() {
-    console.log('update>>>>>>>>>>>>>')
-    console.log(this.props.appState)
-    console.log(this.props.appState.isPending)
-    console.log(this.props.appState.serverId)
-    console.log(this.props.appState.serverState)
-    console.log(this.props.appState.rankData)
-    console.log('<<<<<<<<<<<<<update')
+    // console.log('update>>>>>>>>>>>>>')
+    // console.log(this.props.appState)
+    // console.log(this.props.appState.isPending)
+    // console.log(this.props.appState.serverId)
+    // console.log(this.props.appState.serverState)
+    // console.log(this.props.appState.rankData)
+    // console.log('<<<<<<<<<<<<<update')
     return (
       <Layout>
         <Header className="header" style={{ position: 'fixed', width: '100%' }}>

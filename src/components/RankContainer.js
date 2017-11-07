@@ -15,7 +15,7 @@ export default class RankContainer extends React.Component {
     this.props.appState.handleDataPending('free')
   }
   onChange = checked => {
-    console.log(`:::::::::::::switch : ${checked}`)
+    // console.log(`:::::::::::::switch : ${checked}`)
     this.props.appState.handleIgnoreZ(checked)
     if(this.props.appState.rankData !== ''){
       this.props.appState.setFormatData(formatData(this.props.appState.rankData, checked))
@@ -24,7 +24,7 @@ export default class RankContainer extends React.Component {
   render() {
     let status = ''
     if(this.props.appState.serverState === 'pending' && this.props.appState.serverId) {
-      console.log('=== fetch start ===')
+      // console.log('=== fetch start ===')
       axios.get('http://124.65.37.154:12450/api/calrank', {
         params: {
           server: this.props.appState.serverId
@@ -32,15 +32,15 @@ export default class RankContainer extends React.Component {
         timeout: TIME_OUT,
       })
         .then(response => {
-          console.log('=== fetch success ===')
+          // console.log('=== fetch success ===')
           this.props.appState.handleDataPending('success');
-          console.log(response.data)
+          // console.log(response.data)
           this.props.appState.setRankData(response.data)
           this.props.appState.setFormatData(formatData(response.data, this.props.appState.ignoreZ))
         })
         .catch(error => {
-          console.log('=== fetch error ===')
-          console.log(error)
+          // console.log('=== fetch error ===')
+          // console.log(error)
           this.props.appState.setErrorMessage(error.toString())
           this.props.appState.handleDataPending('error');
         })

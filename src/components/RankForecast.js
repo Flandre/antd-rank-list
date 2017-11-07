@@ -20,7 +20,7 @@ export default class RankForecast extends React.Component {
         forecastData.push(dataObj)
       })
     }
-    console.log(forecastData)
+    // console.log(forecastData)
     const columns = [
       {
         title: '排名',

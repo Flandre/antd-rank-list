@@ -20,10 +20,10 @@ export default class RankTable extends React.Component {
     return `${dateNow.getDate() + 1}日 ${dateNow.getHours()}:${addZero(dateNow.getMinutes())}`
   }
   render() {
-    console.log('========format data ========')
-    if(this.props.appState.rankData !== ''){
-      console.log(this.props.appState.rankData)
-    }
+    // console.log('========format data ========')
+    // if(this.props.appState.rankData !== ''){
+    //   console.log(this.props.appState.rankData)
+    // }
     let { sortedInfo } = this.state;
     sortedInfo = sortedInfo || {};
     const columns = [
@@ -148,7 +148,7 @@ export default class RankTable extends React.Component {
         width: 50
       },
     ]
-    console.log(`========${typeof this.props.appState.formatData.concat([])}=========`)
+    // console.log(`========${typeof this.props.appState.formatData.concat([])}=========`)
     return (
       <div>
         {

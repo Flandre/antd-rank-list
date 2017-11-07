@@ -1,5 +1,5 @@
 export default (data, ignore) => {
-  console.log("ignore Z:"+ignore)
+  // console.log("ignore Z:"+ignore)
   let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth(), fixcount = 0
   const monthOfDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const getDateNo = function(now){
