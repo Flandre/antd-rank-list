@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 import { Table } from "antd"
-import _ from "lodash"
+import _sortBy from "lodash/sortBy"
 
 @observer
 export default class RankForecast extends React.Component {
@@ -14,8 +14,8 @@ export default class RankForecast extends React.Component {
           totalts = days * 86400000 - 3600000 * 4, dur = source.zexpto - source.zexpfrom, rate = totalts / dur
         dataObj.rank = ele
         dataObj.list = source.tail[ele]
-        dataObj.now = _.sortBy(format, 'senka').reverse()[ele - 1].senka
-        dataObj.max = _.sortBy(format, 'maxSenka').reverse()[ele - 1].maxSenka
+        dataObj.now = _sortBy(format, 'senka').reverse()[ele - 1].senka
+        dataObj.max = _sortBy(format, 'maxSenka').reverse()[ele - 1].maxSenka
         dataObj.furture = ((dataObj.max - source.front[ele] - 1380) * rate + source.front[ele] + 1380).toFixed(0)
         forecastData.push(dataObj)
       })

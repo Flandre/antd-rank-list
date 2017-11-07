@@ -73,7 +73,7 @@ export default class RankContainer extends React.Component {
           <span style={{ fontSize: '24px' }}>{this.props.appState.serverId ? `${serverName[this.props.appState.serverId]}` : '请选择服务器'}</span>
           <span>{this.props.appState.rankData ? `  (统计时间: ${new Date(this.props.appState.rankData.ts).toLocaleString()})` : ''}</span>
         </p>
-        <p style={{ marginBottom: '10px' }}>忽略未完成的Z <Switch
+        <p style={{ marginBottom: '10px' }}>忽略未完成的Z作战 <Switch
           defaultChecked={this.props.appState.ignoreZ}
           onChange={this.onChange}
           size="small"
