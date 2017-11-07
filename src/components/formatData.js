@@ -30,10 +30,11 @@ export default (data, ignore) => {
        * expNowOffset:       经验值统计结束时间（timestamp，如果有）
        * maxSenka:           预测最大战果
        * minSenka:           预测最小战果
+       * frontex:            预测战果
        *
        */
 
-      let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name} = cur,
+      let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name, frontex} = cur,
         zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index].maxSenka : 0
 
       userObj.lno = lno
@@ -267,6 +268,11 @@ export default (data, ignore) => {
           userObj.minSenka = subsenka + 1380 - zcleared
           isSuccess = true
           break
+      }
+      if(frontex){
+        userObj.maxSenka -= frontex
+        userObj.minSenka -= frontex
+        userObj.frontex = frontex
       }
       /* todo: 可能会导致不一致 fix*/
       if(_i){

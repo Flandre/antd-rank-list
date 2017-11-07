@@ -69,7 +69,7 @@ export default class RankContainer extends React.Component {
     return(
       <div>
         {status}
-        <p style={{ textAlign: 'left', fontSize: '24px' }}>{this.props.appState.serverId ? `您选择的是：${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
+        <p style={{ textAlign: 'left', fontSize: '24px' }}>{this.props.appState.serverId ? `${serverName[this.props.appState.serverId]}` : '请选择服务器'}</p>
         <p style={{ marginBottom: '10px' }}>忽略未完成的Z <Switch
           defaultChecked={this.props.appState.ignoreZ}
           onChange={this.onChange}

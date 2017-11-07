@@ -100,21 +100,21 @@ export default class RankTable extends React.Component {
           if(record.extraStartOffset && record.extraNowOffset){
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
+                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
               }
             } else {
               return {
-                children: <span>{record.extraSenka}  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</span>
+                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</span>
               }
             }
           } else {
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
+                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
               }
             } else {
               return {
-                children: <span>{record.extraSenka}</span>
+                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup></span>
               }
             }
           }
