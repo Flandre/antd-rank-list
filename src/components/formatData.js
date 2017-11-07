@@ -104,18 +104,8 @@ export default (data, ignore) => {
             userObj.zCompleteMonth = zComplete + 1
           }
           if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
-
-
-
             userObj.maxSenka = subsenka + fsenka + 1380 - zcleared
             userObj.minSenka = subsenka + fsenka + 1380 - zcleared
-
-            if(name=="QS"){
-              console.log(1111111111);
-              console.log(max);
-              console.log(userObj.maxSenka);
-            }
-
           } else if (fsenkats === 0 && getDateNo(expfrom) === 0 && new Date(basets).getMonth() < month){
             let minsenka = fsenka + subsenka + 1380 - zcleared
             let maxsenka = fsenka + subsenka + subbase + 1380 - zcleared

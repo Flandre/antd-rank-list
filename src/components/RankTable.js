@@ -4,14 +4,28 @@ import { Table } from "antd"
 
 @observer
 export default class RankTable extends React.Component {
+  state = {
+    sortedInfo: {
+      columnKey: 'maxSenka',
+      order: 'descend'
+    }
+  }
+  handleChange = (pagenation, filters, sorter) => {
+    this.setState({
+      sortedInfo: sorter,
+    })
+  }
   formatDate = date => {
     const dateNow = new Date(date), addZero = num => num > 9? num: '0' + num
     return `${dateNow.getDate() + 1}日 ${dateNow.getHours()}:${addZero(dateNow.getMinutes())}`
   }
   render() {
     console.log('========format data ========')
-    if(this.props.appState.rankData !== '')
+    if(this.props.appState.rankData !== ''){
       console.log(this.props.appState.rankData)
+    }
+    let { sortedInfo } = this.state;
+    sortedInfo = sortedInfo || {};
     const columns = [
       {
         title: '排名(当前/榜单)',
@@ -32,13 +46,15 @@ export default class RankTable extends React.Component {
         dataIndex: 'senka',
         key: 'senka',
         sorter: (a, b) => a.senka - b.senka,
-        width: 100
+        sortOrder: sortedInfo.columnKey === 'senka' && sortedInfo.order,
+        width: 100,
       },
       {
         title: '最大',
         dataIndex: 'maxSenka',
         key: 'maxSenka',
         sorter: (a, b) => a.maxSenka - b.maxSenka,
+        sortOrder: sortedInfo.columnKey === 'maxSenka' && sortedInfo.order,
         width: 50,
         render: (text, record, index) => {
           if(record.maxSenka === record.minSenka){
@@ -60,6 +76,7 @@ export default class RankTable extends React.Component {
         dataIndex: 'minSenka',
         key: 'minSenka',
         sorter: (a, b) => a.minSenka - b.minSenka,
+        sortOrder: sortedInfo.columnKey === 'minSenka' && sortedInfo.order,
         width: 50,
         render: (text, record, index) => {
           if(record.maxSenka === record.minSenka){
@@ -90,6 +107,7 @@ export default class RankTable extends React.Component {
           }
         },
         sorter: (a, b) => a.subSenka - b.subSenka,
+        sortOrder: sortedInfo.columnKey === 'subSenka' && sortedInfo.order,
         width: 200
       },
       {
@@ -143,6 +161,7 @@ export default class RankTable extends React.Component {
               size="middle"
               bordered
               rowKey="mainTable"
+              onChange={this.handleChange}
             />
             :
             ''
