@@ -45,21 +45,22 @@ export default (data, ignore) => {
       if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
         zcleared = 350
       } else if (ignore || (now.getDate() === monthOfDay[now.getMonth()] && now.getHours() >= 14)){
-        if(ex > 1025 && ex < 1035){
+        if(ex > 1025 && ex < 1035 && !frontex){
           zcleared = 350
           zComplete = -1
         }
-        if(ex < 960 && ex > 950){
+        if(ex < 960 && ex > 950 && !frontex){
           zcleared = 350
           zComplete = -1
         }
-        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex < 950) {
+        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex +frontex < 950) {
           zcleared = 350
           zComplete = -1
         }
-        if(ex < 950){
+        if(ex + frontex < 950){
           if(max){
             if(exlist){
+              exlist.push(frontex);
               let zc = 0
               exlist.forEach(ele => {
                 if(parseInt(ele) > 420){
@@ -79,6 +80,7 @@ export default (data, ignore) => {
           }
         }
       }
+
 
       /* 处理经验值 */
       userObj.subSenka = subsenka
@@ -102,8 +104,18 @@ export default (data, ignore) => {
             userObj.zCompleteMonth = zComplete + 1
           }
           if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
+
+
+
             userObj.maxSenka = subsenka + fsenka + 1380 - zcleared
             userObj.minSenka = subsenka + fsenka + 1380 - zcleared
+
+            if(name=="QS"){
+              console.log(1111111111);
+              console.log(max);
+              console.log(userObj.maxSenka);
+            }
+
           } else if (fsenkats === 0 && getDateNo(expfrom) === 0 && new Date(basets).getMonth() < month){
             let minsenka = fsenka + subsenka + 1380 - zcleared
             let maxsenka = fsenka + subsenka + subbase + 1380 - zcleared
