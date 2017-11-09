@@ -30,6 +30,8 @@ export default class MainLayout extends React.Component {
             collapsed={this.props.appState.antdOption.collapsed}
             onCollapse={this.onCollapse}
             style={{ marginBottom: 48 }}
+            breakpoint="md"
+            collapsedWidth="64"
           >
             <SenkaMenu appState={this.props.appState}/>
           </Sider>

@@ -17,7 +17,7 @@ export default class RankTable extends React.Component {
   }
   formatDate = date => {
     const dateNow = new Date(date), addZero = num => num > 9? num: '0' + num
-    return `${dateNow.getDate() + 1}日 ${dateNow.getHours()}:${addZero(dateNow.getMinutes())}`
+    return `${dateNow.getDate()}日 ${dateNow.getHours()}:${addZero(dateNow.getMinutes())}`
   }
   render() {
     // console.log('========format data ========')

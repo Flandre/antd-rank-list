@@ -24,9 +24,11 @@ export default class RankForecast extends React.Component {
     const columns = [
       {
         title: '排名',
-        dataIndex: 'rank',
         key: 'rank',
-        width: 100
+        render: (text, record, index) => (
+          `${record.rank}位`
+        ),
+        width: 50
       },
       {
         title: '榜单',
@@ -54,7 +56,7 @@ export default class RankForecast extends React.Component {
       },
     ]
     return(
-      <div style={{ marginBottom: '10px' }}>
+      <div style={{ marginBottom: '10px', maxWidth: '500px'}}>
         {
           source && format.length ?
             <Table
