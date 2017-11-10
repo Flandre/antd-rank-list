@@ -35,7 +35,7 @@ export default (data, ignore) => {
        */
 
       let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name, frontex} = cur,
-        zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index].maxSenka : 0
+        zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index - fixcount].maxSenka : 0
 
       userObj.lno = lno
       userObj.name = name
