@@ -25,7 +25,7 @@ export default class RankContainer extends React.Component {
     let status = ''
     if(this.props.appState.serverState === 'pending' && this.props.appState.serverId) {
       // console.log('=== fetch start ===')
-      axios.get('http://124.65.37.154:12450/api/calrank', {
+      axios.get('http://flanb.msharebox.com:12450/api/calrank', {
         params: {
           server: this.props.appState.serverId
         },

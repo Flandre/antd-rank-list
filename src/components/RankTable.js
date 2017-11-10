@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
-import { Table } from "antd"
+import { Table, Icon } from "antd"
 
 @observer
 export default class RankTable extends React.Component {
@@ -19,6 +19,26 @@ export default class RankTable extends React.Component {
     const dateNow = new Date(date), addZero = num => num > 9? num: '0' + num
     return `${dateNow.getDate()}日 ${dateNow.getHours()}:${addZero(dateNow.getMinutes())}`
   }
+  sortTable = e => {
+    let sortBy = e.currentTarget.getAttribute('value'),
+      sorter = sortBy === this.state.sortedInfo.columnKey ? {} : {
+        columnKey: sortBy,
+        order: 'descend'
+      }
+    this.setState({
+      sortedInfo: sorter,
+    })
+  }
+  rowStyle = index => {
+    if(index < 5)
+      return 'rank5'
+    else if(index < 20)
+      return 'rank20'
+    else if(index < 100)
+      return 'rank100'
+    else if(index < 500)
+      return 'rank500'
+  }
   render() {
     // console.log('========format data ========')
     // if(this.props.appState.rankData !== ''){
@@ -28,29 +48,41 @@ export default class RankTable extends React.Component {
     sortedInfo = sortedInfo || {};
     const columns = [
       {
-        title: '排名(当前/榜单)',
+        title: <div>排名(当前/榜单)</div>,
         key: 'index',
         render: (text, record, index) => (
-          `${index + 1}位（${record.lno}位）`
+          <div className={this.rowStyle(index)}>{index + 1}位（{record.lno}位）</div>
         ),
         width: 100
       },
       {
-        title: '昵称',
-        dataIndex: 'name',
+        title: <div>昵称</div>,
         key: 'name',
+        render: (text, record, index) => (
+          <div className={this.rowStyle(index)}>{record.name}</div>
+        ),
         width: 100
       },
       {
-        title: '当前',
-        dataIndex: 'senka',
+        title:
+          <div onClick={this.sortTable} value='senka'>
+            当前
+            {sortedInfo.columnKey === 'senka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
+          </div>,
         key: 'senka',
+        render: (text, record, index) => (
+          <div className={this.rowStyle(index)}>{record.senka}</div>
+        ),
         sorter: (a, b) => a.senka - b.senka,
         sortOrder: sortedInfo.columnKey === 'senka' && sortedInfo.order,
         width: 100,
       },
       {
-        title: '最大',
+        title:
+          <div onClick={this.sortTable} value='maxSenka'>
+            最大
+            {sortedInfo.columnKey === 'maxSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
+          </div>,
         dataIndex: 'maxSenka',
         key: 'maxSenka',
         sorter: (a, b) => a.maxSenka - b.maxSenka,
@@ -59,20 +91,24 @@ export default class RankTable extends React.Component {
         render: (text, record, index) => {
           if(record.maxSenka === record.minSenka){
             return{
-              children: <span>{text}</span>,
+              children: <div className={this.rowStyle(index)}>{text}</div>,
               props: {
                 colSpan: 2
               }
             }
           } else {
             return{
-              children: <span>{text}</span>
+              children: <div className={this.rowStyle(index)}>{text}</div>
             }
           }
         }
       },
       {
-        title: '最小',
+        title:
+          <div onClick={this.sortTable} value="minSenka">
+            最小
+            {sortedInfo.columnKey === 'minSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
+          </div>,
         dataIndex: 'minSenka',
         key: 'minSenka',
         sorter: (a, b) => a.minSenka - b.minSenka,
@@ -87,22 +123,26 @@ export default class RankTable extends React.Component {
             }
           } else {
             return{
-              children: <span>{text}</span>
+              children: <div className={this.rowStyle(index)}>{text}</div>
             }
           }
         }
       },
       {
-        title: '经验',
+        title:
+          <div onClick={this.sortTable} value='subSenka'>
+            经验
+            {sortedInfo.columnKey === 'subSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
+          </div>,
         key: 'subSenka',
-        render: (text, record) => {
+        render: (text, record, index) => {
           if(record.expStartOffset && record.expNowOffset){
             return {
-              children: <span>{record.subSenka}  （{this.formatDate(record.expStartOffset)} ~ {this.formatDate(record.expNowOffset)}）</span>
+              children: <div className={this.rowStyle(index)}>{record.subSenka}  （{this.formatDate(record.expStartOffset)} ~ {this.formatDate(record.expNowOffset)}）</div>
             }
           } else {
             return {
-              children: <span>{record.subSenka}</span>
+              children: <div className={this.rowStyle(index)}>{record.subSenka}</div>
             }
           }
         },
@@ -111,28 +151,28 @@ export default class RankTable extends React.Component {
         width: 200
       },
       {
-        title: 'ex',
+        title: <div>ex</div>,
         dataIndex: 'extraSenka',
         key: 'extraSenka',
-        render: (text, record) => {
+        render: (text, record, index) => {
           if(record.extraStartOffset && record.extraNowOffset){
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
+                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
               }
             } else {
               return {
-                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</span>
+                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</div>
               }
             }
           } else {
             if(typeof record.zCompleteMonth === 'number'){
               return {
-                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</span>
+                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
               }
             } else {
               return {
-                children: <span>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup></span>
+                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup></div>
               }
             }
           }
@@ -140,10 +180,10 @@ export default class RankTable extends React.Component {
         width: 200
       },
       {
-        title: '未完成ex',
+        title: <div>未完成ex</div>,
         key: 'unfinishedExtra',
-        render: (text, record) => (
-          record.maxSenka - record.senka
+        render: (text, record, index) => (
+          <div className={this.rowStyle(index)}>{record.maxSenka - record.senka}</div>
         ),
         width: 50
       },
@@ -162,6 +202,7 @@ export default class RankTable extends React.Component {
               bordered
               rowKey="mainTable"
               onChange={this.handleChange}
+              className="rank-table"
             />
             :
             ''
