@@ -32,11 +32,15 @@ export default class RankContainer extends React.Component {
         timeout: TIME_OUT,
       })
         .then(response => {
-          // console.log('=== fetch success ===')
-          this.props.appState.handleDataPending('success');
-          // console.log(response.data)
-          this.props.appState.setRankData(response.data)
-          this.props.appState.setFormatData(formatData(response.data, this.props.appState.ignoreZ))
+          if(response.data === 'error'){
+            throw new Error('时空炸了')
+          } else {
+            // console.log('=== fetch success ===')
+            this.props.appState.handleDataPending('success');
+            // console.log(response.data)
+            this.props.appState.setRankData(response.data)
+            this.props.appState.setFormatData(formatData(response.data, this.props.appState.ignoreZ))
+          }
         })
         .catch(error => {
           // console.log('=== fetch error ===')
