@@ -65,7 +65,7 @@ export default class RankTable extends React.Component {
       },
       {
         title:
-          <div onClick={this.sortTable} value='senka'>
+          <div onClick={this.sortTable} value='senka' className="allow-sort">
             当前
             {sortedInfo.columnKey === 'senka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
           </div>,
@@ -79,7 +79,7 @@ export default class RankTable extends React.Component {
       },
       {
         title:
-          <div onClick={this.sortTable} value='maxSenka'>
+          <div onClick={this.sortTable} value='maxSenka' className="allow-sort">
             最大
             {sortedInfo.columnKey === 'maxSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
           </div>,
@@ -105,7 +105,7 @@ export default class RankTable extends React.Component {
       },
       {
         title:
-          <div onClick={this.sortTable} value="minSenka">
+          <div onClick={this.sortTable} value="minSenka" className="allow-sort">
             最小
             {sortedInfo.columnKey === 'minSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
           </div>,
@@ -130,7 +130,7 @@ export default class RankTable extends React.Component {
       },
       {
         title:
-          <div onClick={this.sortTable} value='subSenka'>
+          <div onClick={this.sortTable} value='subSenka' className="allow-sort">
             经验
             {sortedInfo.columnKey === 'subSenka'? <Icon style={{ float: 'right', lineHeight: '18px' }} type="download" /> : ''}
           </div>,
