@@ -56,7 +56,7 @@ export default class RankForecast extends React.Component {
       },
     ]
     return(
-      <div style={{ marginBottom: '10px', maxWidth: '500px'}}>
+      <div>
         {
           source && format.length ?
             <Table

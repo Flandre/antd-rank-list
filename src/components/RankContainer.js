@@ -5,7 +5,7 @@ import RankForecast from "./RankForecast"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
-import { Icon, Alert, Switch } from 'antd'
+import { Row, Col, Card, Icon, Alert, Switch } from 'antd'
 import formatData from "./formatData"
 
 @observer
@@ -82,7 +82,14 @@ export default class RankContainer extends React.Component {
           onChange={this.onChange}
           size="small"
         /></p>
-        <RankForecast appState={this.props.appState}/>
+        <Row type="flex" gutter={16} style={{ marginBottom: '10px', alignItems: 'stretch'}}>
+          <Col span={12} className="gutter-row">
+            <RankForecast appState={this.props.appState}/>
+          </Col>
+          <Col span={12} className="gutter-row">
+            col-12-chart
+          </Col>
+        </Row>
         <RankTable appState={this.props.appState}/>
       </div>
     )
