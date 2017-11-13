@@ -5,7 +5,7 @@ import RankForecast from "./RankForecast"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
-import { Row, Col, Card, Icon, Alert, Switch } from 'antd'
+import { Row, Col, Icon, Alert, Switch } from 'antd'
 import formatData from "./formatData"
 
 @observer
