@@ -41,6 +41,8 @@ export default (data, ignore) => {
       userObj.name = name
       userObj.senka = senka
 
+      frontex = frontex > 10 && frontex < 75 ? 75 : frontex
+
       /* 处理z炮 */
       if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
         zcleared = 350
