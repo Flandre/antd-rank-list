@@ -20,7 +20,7 @@
   "dependencies": {
     "antd": "^2.13.7",
     "axios": "^0.17.0",
-    "echarts": "^3.8.3",
+    "frappe-charts": "0.0.8",
     "lodash": "^4.17.4",
     "mobx": "^3.3.1",
     "mobx-react": "^4.3.3",

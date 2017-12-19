@@ -88,6 +88,7 @@ export default class RankContainer extends React.Component {
             <RankForecast appState={this.props.appState}/>
           </Col>
           <Col span={12} className="gutter-row">
+            <RankChart appState={this.props.appState}/>
           </Col>
         </Row>
         <RankTable appState={this.props.appState}/>
