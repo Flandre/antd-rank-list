@@ -55,7 +55,7 @@ export default (data, ignore) => {
           zcleared = 350
           zComplete = -1
         }
-        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex +frontex < 950) {
+        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex < 330) {
           zcleared = 350
           zComplete = -1
         }
@@ -65,13 +65,26 @@ export default (data, ignore) => {
               exlist.push(frontex);
               let zc = 0
               exlist.forEach(ele => {
-                if(parseInt(ele) > 420){
+                var aex=parseInt(ele);
+                if(aex>345&&aex<355){
+                  zc = 1
+                }
+                if(aex>420&&aex<430){
+                  zc = 1
+                }
+                if(aex>445&&aex<455){
+                  zc = 1
+                }
+                if(aex>495&&aex<505){
+                  zc = 1
+                }
+                if(aex>510){
                   zc = 1
                 }
               })
               let ruex = max - senka
               let hiddenex = 1380 - ex - ruex
-              if(hiddenex > 420){
+              if((hiddenex>345&&hiddenex<355)||hiddenex > 420){
                 zc = 1
               }
               if(zc === 0){
@@ -82,8 +95,6 @@ export default (data, ignore) => {
           }
         }
       }
-
-
       /* 处理经验值 */
       userObj.subSenka = subsenka
       if (Math.abs(expfrom - zexpfrom) > 1200000 || Math.abs(expto - zexpto) > 1200000) {
