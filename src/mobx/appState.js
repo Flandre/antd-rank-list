@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, autorun } from 'mobx';
 
 let appState = observable({
   allData: '这里没有数据',
@@ -13,6 +13,11 @@ let appState = observable({
     collapsed: false
   },
 })
+
+autorun(() => {
+  console.log('mobx autorun')
+  window.__mobx__ = appState
+});
 
 /* 控制menu折叠 */
 appState.handleCollapsed = action(() => {
