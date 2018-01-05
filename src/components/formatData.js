@@ -151,7 +151,7 @@ export default (data, ignore) => {
             }else{
               maxsenkaArr.push(Math.floor(minmap[firstExpDateNo] + subsenka + (expfrom - zexfrom) * 0.00001 + 1380 - zcleared))
             }
-            userObj.maxSenka = Math.min(...maxsenkaArr)
+            userObj.maxSenka = Math.max(Math.min(...maxsenkaArr),senka)
           }
           isSuccess = true
           break
