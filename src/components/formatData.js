@@ -1,6 +1,7 @@
 export default (data, ignore) => {
   // console.log("ignore Z:"+ignore)
   let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth(), fixcount = 0
+  let year=now.getYear();
   const monthOfDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const getDateNo = function(now){
     now = new Date(new Date(now).getTime()+(new Date().getTimezoneOffset()+480)*60000)
@@ -44,7 +45,7 @@ export default (data, ignore) => {
       frontex = frontex > 10 && frontex < 75 ? 75 : frontex
 
       /* 处理z炮 */
-      if(Math.floor((month + 1) / 3) === Math.floor((z + 1) / 3) && z >= 0){
+      if((Math.floor((month + 1) / 3)%4) === (Math.floor((z + 1) / 3)%4) && z >= 0){
         zcleared = 350
       } else if (ignore || (now.getDate() === monthOfDay[now.getMonth()] && now.getHours() >= 14)){
         if(ex > 1025 && ex < 1035 && !frontex){
@@ -119,7 +120,7 @@ export default (data, ignore) => {
           if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
             userObj.maxSenka = subsenka + fsenka + 1380 - zcleared
             userObj.minSenka = subsenka + fsenka + 1380 - zcleared
-          } else if (fsenkats === 0 && getDateNo(expfrom) === 0 && new Date(basets).getMonth() < month){
+          } else if (fsenkats === 0 && getDateNo(expfrom) === 0 && new Date(basets).getYear()*12+new Date(basets).getMonth() < month+year*12){
             let minsenka = fsenka + subsenka + 1380 - zcleared
             let maxsenka = fsenka + subsenka + subbase + 1380 - zcleared
             let max2 = Math.floor(minsenka + (expfrom - zexfrom) * 0.00001)
@@ -142,7 +143,7 @@ export default (data, ignore) => {
             maxsenkaArr.push(subsenka + minmap[firstExpDateNo] + 1380 - zcleared)
             maxsenkaArr.push(senka + 1380 - ex - zcleared)
             maxsenkaArr.push(subsenka + fsenka + 1380 - zcleared)
-            if(new Date(basets).getMonth() < month){
+            if(new Date(basets).getMonth() + new Date(basets).getYear()*12< month+year*12){
               maxsenkaArr.push(subsenka + subbase + minmap[0] + 1380 - zcleared)
             }
             if(fsenkats === 0){
@@ -276,7 +277,7 @@ export default (data, ignore) => {
               subsenka + fsenka + 1380 - zcleared,
               99999
             ]
-          if(new Date(basets).getMonth() < month){
+          if(new Date(basets).getMonth() + new Date(basets).getYear()*12< month+year*12){
             maxsenkaArr.push(subsenka + subbase + 1380 - zcleared)
           }
           userObj.maxSenka = Math.min(...maxsenkaArr)
