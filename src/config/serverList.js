@@ -20,7 +20,7 @@ export const serverName = {
   19: '佐伯湾泊地',
   20: '柱岛泊地',
 }
-let availableServer = [8, 16, 15, 18, 19, 20]
+let availableServer = [8, 14, 15, 16, 18, 19]
 let serverMap = {}
 availableServer.forEach(ele => {
   serverMap[ele] = serverName[ele]
