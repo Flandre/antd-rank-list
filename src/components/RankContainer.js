@@ -3,6 +3,7 @@ import { observer } from "mobx-react"
 import RankTable from "./RankTable"
 import RankForecast from "./RankForecast"
 import RankChart from "./RankChart"
+import RankFeature from "./RankFeature"
 import { serverName } from "../config/serverList"
 import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
@@ -88,7 +89,7 @@ export default class RankContainer extends React.Component {
             <RankForecast appState={this.props.appState}/>
           </Col>
           <Col span={12} className="gutter-row">
-            <RankChart appState={this.props.appState}/>
+            <RankFeature appState={this.props.appState}/>
           </Col>
         </Row>
         <RankTable appState={this.props.appState}/>
