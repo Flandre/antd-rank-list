@@ -1,3 +1,5 @@
+const {getEx} = require('./calex')
+
 export default (data, ignore) => {
   // console.log("ignore Z:"+ignore)
   let AllData = [], { zexfrom, zexto, zexpfrom, zexpto, minmap, front } = data, now = new Date(), month = now.getMonth(), fixcount = 0
@@ -38,6 +40,9 @@ export default (data, ignore) => {
       let { lno, type, z, exfrom, exto, expfrom, expto, exlist, ex, basets, fsenkats, subsenka, fsenka, subbase, senkalist, may, senka, name, frontex} = cur,
         zcleared = 0, userObj = {}, zComplete = z, isSuccess = false, max = _i ? AllData[index - fixcount].maxSenka : 0
 
+      let z2cleared = 0;
+      let z2Complete = -1;
+
       userObj.lno = lno
       userObj.name = name
       userObj.senka = senka
@@ -51,18 +56,51 @@ export default (data, ignore) => {
         if(ex > 1025 && ex < 1035 && !frontex){
           zcleared = 350
           zComplete = -1
+          z2cleared = 200
+          z2Complete = -1
         }
         if(ex < 960 && ex > 950 && !frontex){
           zcleared = 350
           zComplete = -1
+          z2cleared = 200
+          z2Complete = -1
         }
-        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex < 330) {
+        if (Math.abs(expfrom - zexfrom) < 1200000 && Math.abs(expto - zexto) < 1200000 && ex < 190) {
           zcleared = 350
           zComplete = -1
+          z2cleared = 200
+          z2Complete = -1
         }
         if(ex + frontex < 950){
           if(max){
             if(exlist){
+              var z1c=0;
+              var z2c=0;
+              var z3c=0;
+              var mayex = getEx(exlist);
+              for(var n1=0;n1<mayex.length;n1++){
+                var mayd = mayex[n1];
+                for(var n2=0;n2<mayd.length;n2++){
+                  var dex = mayd[n2];
+                  var id = dex.id;
+                  if(id==7){
+                    z1c=1;
+                  }
+                  if(id==8){
+                    z2c=1;
+                  }
+                }
+              }
+              if(z1c==0){
+                zcleared = 350
+                zComplete = -1
+              }
+              if(z2c==0){
+                z2cleared = 200
+                z2Complete = -1
+              }
+
+
               exlist.push(frontex);
               let zc = 0
               exlist.forEach(ele => {
@@ -84,7 +122,7 @@ export default (data, ignore) => {
                 }
               })
               let ruex = max - senka
-              let hiddenex = 1380 - ex - ruex
+              let hiddenex = 1580 - ex - ruex
               if((hiddenex>345&&hiddenex<355)||hiddenex > 420){
                 zc = 1
               }
@@ -118,38 +156,38 @@ export default (data, ignore) => {
             userObj.zCompleteMonth = zComplete + 1
           }
           if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
-            userObj.maxSenka = subsenka + fsenka + 1380 - zcleared
-            userObj.minSenka = subsenka + fsenka + 1380 - zcleared
+            userObj.maxSenka = subsenka + fsenka + 1580 - zcleared - z2cleared
+            userObj.minSenka = subsenka + fsenka + 1580 - zcleared - z2cleared
           } else if (fsenkats === 0 && getDateNo(expfrom) === 0 && new Date(basets).getYear()*12+new Date(basets).getMonth() < month+year*12){
-            let minsenka = fsenka + subsenka + 1380 - zcleared
-            let maxsenka = fsenka + subsenka + subbase + 1380 - zcleared
+            let minsenka = fsenka + subsenka + 1580 - zcleared - z2cleared
+            let maxsenka = fsenka + subsenka + subbase + 1580 - zcleared - z2cleared
             let max2 = Math.floor(minsenka + (expfrom - zexfrom) * 0.00001)
             if(max2 < maxsenka){
               maxsenka = max2
             }
-            let max3 = senka + 1380 - ex - zcleared
+            let max3 = senka + 1580 - ex - zcleared - z2cleared
             if(max3 < maxsenka){
               maxsenka=max3
             }
             userObj.maxSenka = maxsenka
             userObj.minSenka = minsenka
           } else if (ensure) {
-            userObj.maxSenka = senka + 1380 - zcleared - ex
-            userObj.minSenka = senka + 1380 - zcleared - ex
+            userObj.maxSenka = senka + 1580 - zcleared - z2cleared - ex
+            userObj.minSenka = senka + 1580 - zcleared - z2cleared - ex
           } else {
             let firstExpDateNo = getDateNo(expfrom)
-            userObj.minSenka = subsenka + 1380 - zcleared
+            userObj.minSenka = subsenka + 1580 - zcleared - z2cleared
             let maxsenkaArr = []
-            maxsenkaArr.push(subsenka + minmap[firstExpDateNo] + 1380 - zcleared)
-            maxsenkaArr.push(senka + 1380 - ex - zcleared)
-            maxsenkaArr.push(subsenka + fsenka + 1380 - zcleared)
+            maxsenkaArr.push(subsenka + minmap[firstExpDateNo] + 1580 - zcleared - z2cleared)
+            maxsenkaArr.push(senka + 1580 - ex - zcleared - z2cleared)
+            maxsenkaArr.push(subsenka + fsenka + 1580 - zcleared - z2cleared)
             if(new Date(basets).getMonth() + new Date(basets).getYear()*12< month+year*12){
-              maxsenkaArr.push(subsenka + subbase + minmap[0] + 1380 - zcleared)
+              maxsenkaArr.push(subsenka + subbase + minmap[0] + 1580 - zcleared - z2cleared)
             }
             if(fsenkats === 0){
-              maxsenkaArr.push(Math.floor(fsenka + subsenka + (expfrom - zexfrom) * 0.00001 + 1380 - zcleared))
+              maxsenkaArr.push(Math.floor(fsenka + subsenka + (expfrom - zexfrom) * 0.00001 + 1580 - zcleared - z2cleared))
             }else{
-              maxsenkaArr.push(Math.floor(minmap[firstExpDateNo] + subsenka + (expfrom - zexfrom) * 0.00001 + 1380 - zcleared))
+              maxsenkaArr.push(Math.floor(minmap[firstExpDateNo] + subsenka + (expfrom - zexfrom) * 0.00001 + 1580 - zcleared - z2cleared))
             }
             userObj.maxSenka = Math.max(Math.min(...maxsenkaArr),senka)
           }
@@ -207,18 +245,18 @@ export default (data, ignore) => {
               if(senkas === max.senka){
                 userObj.subSenka = maxsub.subsenka
                 if(maxf.ts === 0){
-                  let maxsenka = maxf.senka + maxsub.subsenka + 1380 - zcleared
+                  let maxsenka = maxf.senka + maxsub.subsenka + 1580 - zcleared - z2cleared
                   userObj.maxSenka = maxsenka
                   userObj.minSenka = maxsenka
                 }else{
-                  let maxsenka1 =maxf.senka+maxsub.subsenka+1380-zcleared
+                  let maxsenka1 =maxf.senka+maxsub.subsenka+1580-zcleared - z2cleared
                   let firstExpDateNo = getDateNo(maxsub.expfrom)
-                  let maxsenka2 = minmap[firstExpDateNo]+maxsub.subsenka+1380-zcleared
+                  let maxsenka2 = minmap[firstExpDateNo]+maxsub.subsenka+1580-zcleared - z2cleared
                   let maxsenka = maxsenka1
                   if(maxsenka2<maxsenka){
                     maxsenka=maxsenka2
                   }
-                  let minsenka = maxsub.subsenka+1380-zcleared
+                  let minsenka = maxsub.subsenka+1580-zcleared - z2cleared
                   userObj.maxSenka = maxsenka
                   userObj.minSenka = minsenka
                 }
@@ -234,16 +272,19 @@ export default (data, ignore) => {
                 if(zcleared > 0){
                   userObj.zCompleteMonth = zComplete + 1
                 }
+                if(z2cleared > 0){
+                  userObj.z2CompleteMonth = z2Complete + 1
+                }
               }else{
                 userObj.subSenka = minsub.subsenka
                 if(minf && minf.ts === 0){
-                  let expect = minf.senka + minsub.subsenka + 1380 - zcleared
+                  let expect = minf.senka + minsub.subsenka + 1580 - zcleared - z2cleared
                   userObj.maxSenka = expect
                   userObj.minSenka = expect
                 }else{
                   let firstExpDateNo = getDateNo(minsub.expfrom)
-                  let maxsenka = minmap[firstExpDateNo] + minsub.subsenka + 1380 - zcleared
-                  let minsenka = minsub.subsenka + 1380 - zcleared
+                  let maxsenka = minmap[firstExpDateNo] + minsub.subsenka + 1580 - zcleared - z2cleared
+                  let minsenka = minsub.subsenka + 1580 - zcleared - z2cleared
                   userObj.maxSenka=maxsenka
                   userObj.minSenka=minsenka
                 }
@@ -260,6 +301,9 @@ export default (data, ignore) => {
                   if(zcleared>0){
                     userObj.zCompleteMonth = zComplete + 1
                   }
+                  if(z2cleared>0){
+                    userObj.z2CompleteMonth = z2Complete + 1
+                  }
                 }else{
                   userObj.extraSenka = 'unknown2'
                 }
@@ -272,16 +316,16 @@ export default (data, ignore) => {
           userObj.extraSenka = 'unknown'
           let firstExpDateNo = getDateNo(expfrom),
             maxsenkaArr = [
-              subsenka + minmap[firstExpDateNo] + 1380 - zcleared,
-              senka + 1380 - ex - zcleared || 99999,
-              subsenka + fsenka + 1380 - zcleared,
+              subsenka + minmap[firstExpDateNo] + 1580 - zcleared - z2cleared,
+              senka + 1580 - ex - zcleared - z2cleared || 99999,
+              subsenka + fsenka + 1580 - zcleared - z2cleared,
               99999
             ]
           if(new Date(basets).getMonth() + new Date(basets).getYear()*12< month+year*12){
-            maxsenkaArr.push(subsenka + subbase + 1380 - zcleared)
+            maxsenkaArr.push(subsenka + subbase + 1580 - zcleared - z2cleared)
           }
           userObj.maxSenka = Math.min(...maxsenkaArr)
-          userObj.minSenka = subsenka + 1380 - zcleared
+          userObj.minSenka = subsenka + 1580 - zcleared - z2cleared
           isSuccess = true
           break
       }
