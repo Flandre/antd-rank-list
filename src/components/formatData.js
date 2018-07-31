@@ -26,6 +26,7 @@ export default (data, ignore) => {
        * extraStartOffset:   ex图统计开始时间（timestamp，如果有）
        * extraNowOffset:     ex图统计结束时间（timestamp，如果有）
        * zCompleteMonth:     z图攻略时间（如果有）
+       * z2CompleteMonth:    新三川攻略时间（如果有）
        * subSenka:           根据本月经验算出的战果
        * expStartOffset:     经验值统计开始时间（timestamp，如果有）
        * expNowOffset:       经验值统计结束时间（timestamp，如果有）
