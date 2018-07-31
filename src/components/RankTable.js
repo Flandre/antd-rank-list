@@ -157,22 +157,46 @@ export default class RankTable extends React.Component {
         render: (text, record, index) => {
           if(record.extraStartOffset && record.extraNowOffset){
             if(typeof record.zCompleteMonth === 'number'){
-              return {
-                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
+              if(typeof record.z2CompleteMonth === 'number'){
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'} | {record.z2CompleteMonth ? `${record.z2CompleteMonth}月已完成三川` : '已完成三川'}）</div>
+                }
+              } else {
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
+                }
               }
             } else {
-              return {
-                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</div>
+              if(typeof record.z2CompleteMonth === 'number'){
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)} | {record.z2CompleteMonth ? `${record.z2CompleteMonth}月已完成三川` : '已完成三川'}）</div>
+                }
+              } else {
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{this.formatDate(record.extraStartOffset)} ~ {this.formatDate(record.extraNowOffset)}）</div>
+                }
               }
             }
           } else {
             if(typeof record.zCompleteMonth === 'number'){
-              return {
-                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
+              if(typeof record.z2CompleteMonth === 'number'){
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'} | {record.z2CompleteMonth ? `${record.z2CompleteMonth}月已完成三川` : '已完成三川'}）</div>
+                }
+              } else {
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>  （{record.zCompleteMonth ? `${record.zCompleteMonth}月已完成Z作战` : '已完成Z作战'}）</div>
+                }
               }
             } else {
-              return {
-                children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup></div>
+              if(typeof record.z2CompleteMonth === 'number'){
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup>（{record.z2CompleteMonth ? `${record.z2CompleteMonth}月已完成三川` : '已完成三川'}）</div>
+                }
+              } else {
+                return {
+                  children: <div className={this.rowStyle(index)}>{record.extraSenka}<sup>{record.frontex ? `+${record.frontex}` : ''}</sup></div>
+                }
               }
             }
           }
