@@ -157,6 +157,9 @@ export default (data, ignore) => {
           if(zcleared > 0){
             userObj.zCompleteMonth = zComplete + 1
           }
+          if(z2cleared > 0){
+            userObj.z2CompleteMonth = z2Complete + 1
+          }
           if (fsenkats === 0 && Math.abs(expfrom - zexpfrom) < 1200000) {
             userObj.maxSenka = subsenka + fsenka + 1580 - zcleared - z2cleared
             userObj.minSenka = subsenka + fsenka + 1580 - zcleared - z2cleared
