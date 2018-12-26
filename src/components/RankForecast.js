@@ -16,7 +16,7 @@ export default class RankForecast extends React.Component {
         dataObj.list = source.tail[ele]
         dataObj.now = _sortBy(format, 'senka').reverse()[ele - 1].senka
         dataObj.max = _sortBy(format, 'maxSenka').reverse()[ele - 1].maxSenka
-        dataObj.furture = ((dataObj.max - source.front[ele] - 1380) * rate + source.front[ele] + 1380).toFixed(0)
+        dataObj.furture = ((dataObj.max - source.front[ele] - 1880) * rate + source.front[ele] + 1880).toFixed(0)
         forecastData.push(dataObj)
       })
     }
