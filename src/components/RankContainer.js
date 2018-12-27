@@ -9,6 +9,7 @@ import { TIME_OUT } from "../config/globalSetting"
 import axios from "axios"
 import { Row, Col, Icon, Alert, Switch } from 'antd'
 import formatData from "./formatData"
+import img from './img/eg.png'
 
 @observer
 export default class RankContainer extends React.Component {
@@ -61,7 +62,12 @@ export default class RankContainer extends React.Component {
       case 'error':
         status = <Alert
           message="请求失败"
-          description={this.props.appState.errMsg}
+          description={
+            <div>
+              ${this.props.appState.errMsg}<br/>
+              如果请求失败，请检查浏览器是否拦截不安全内容，如下图(以chrome为例):<br/>
+              <img src={img}/>
+            </div>}
           type="error"
           showIcon
           closable
@@ -89,7 +95,7 @@ export default class RankContainer extends React.Component {
             <RankForecast appState={this.props.appState}/>
           </Col>
           <Col span={12} className="gutter-row">
-            <RankFeature appState={this.props.appState}/>
+            <RankChart appState={this.props.appState}/>
           </Col>
         </Row>
         <RankTable appState={this.props.appState}/>
